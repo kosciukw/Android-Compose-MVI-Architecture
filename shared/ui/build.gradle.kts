@@ -36,6 +36,7 @@ android {
 dependencies {
   api(platform(libs.androidx.compose.bom))
   api(libs.bundles.compose)
+  api(libs.androidx.material3)
 
   debugImplementation(libs.bundles.compose.debug)
 }

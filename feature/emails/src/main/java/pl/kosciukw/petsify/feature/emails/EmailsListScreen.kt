@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
+import pl.kosciukw.petsify.shared.utils.empty
 
 @Composable
 internal fun EmailsListScreen(
@@ -70,7 +71,7 @@ private fun EmailsSearchBar() {
     windowInsets = WindowInsets(0.dp),
     inputField = {
       SearchBarDefaults.InputField(
-        query = "",
+        query = String.empty(),
         onQueryChange = {},
         onSearch = {},
         leadingIcon = {

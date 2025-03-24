@@ -7,10 +7,26 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 
+val HeaderM = TextStyle(
+    fontSize = LineHeightXXL,
+    fontWeight = FontWeight.Bold,
+    color = GoshawkGrey,
+    textAlign = TextAlign.Center,
+    lineHeight = LineHeightXXL
+)
+
+val HeaderL = TextStyle(
+    fontSize = LineHeightXXXL,
+    fontWeight = FontWeight.Bold,
+    color = GoshawkGrey,
+    textAlign = TextAlign.Center,
+    lineHeight = LineHeightXXXL
+)
+
 val TextBoldXL = TextStyle(
     fontSize = LineHeightXL,
     fontWeight = FontWeight.Bold,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightXL
 )
@@ -18,7 +34,7 @@ val TextBoldXL = TextStyle(
 val TextBoldL = TextStyle(
     fontSize = TextL,
     fontWeight = FontWeight.Bold,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightL
 )
@@ -26,7 +42,7 @@ val TextBoldL = TextStyle(
 val TextBoldS = TextStyle(
     fontSize = TextS,
     fontWeight = FontWeight.Bold,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightS
 )
@@ -35,28 +51,28 @@ val TextBoldS = TextStyle(
 val TextBoldM = TextStyle(
     fontSize = TextM,
     fontWeight = FontWeight.Bold,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightL
 )
 
 val TextRegularS = TextStyle(
-    fontSize = LineHeightS,
-    color = Color.Black,
+    fontSize = TextS,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightS
 )
 
 val TextRegularM = TextStyle(
     fontSize = LineHeightM,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightM
 )
 
 val TextRegularL = TextStyle(
     fontSize = LineHeightM,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightL
 )
@@ -64,7 +80,7 @@ val TextRegularL = TextStyle(
 val TextPrimary = TextStyle(
     fontSize = LineHeightL,
     fontWeight = FontWeight.Bold,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightL
 )
@@ -94,7 +110,7 @@ val TextSearchBarUnfocused = TextStyle(
 val TextCategoryPrimary = TextStyle(
     fontSize = TextL,
     fontWeight = FontWeight.Bold,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = TextL
 )
@@ -102,18 +118,7 @@ val TextCategoryPrimary = TextStyle(
 val TextRegularColor = TextStyle(
     fontSize = TextM,
     fontWeight = FontWeight.Bold,
-    color = Color.Black,
+    color = GoshawkGrey,
     textAlign = TextAlign.Center,
     lineHeight = LineHeightL
-)
-
-//Payment card
-val TextPaymentCard = TextStyle(
-    fontFamily = FontFamily.SansSerif,
-    fontWeight = FontWeight.Normal,
-    fontSize = TextXL,
-    color = Color.White,
-    textAlign = TextAlign.Center,
-    lineHeight = LineHeightM,
-    fontStyle = FontStyle.Normal
 )
