@@ -1,4 +1,4 @@
-package pl.kosciukw.petsify.feature.login
+package pl.kosciukw.petsify.feature.login.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -30,8 +29,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pl.kosciukw.petsify.feature.login.R
 import pl.kosciukw.petsify.shared.ui.components.BackgroundImage
 import pl.kosciukw.petsify.shared.ui.components.ButtonContent
 import pl.kosciukw.petsify.shared.ui.components.ButtonRegular
@@ -39,8 +38,6 @@ import pl.kosciukw.petsify.shared.ui.components.ButtonText
 import pl.kosciukw.petsify.shared.ui.components.EditText
 import pl.kosciukw.petsify.shared.ui.theme.BlackLiquorice
 import pl.kosciukw.petsify.shared.ui.theme.GoshawkGrey
-import pl.kosciukw.petsify.shared.ui.theme.Mercury
-import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
 import pl.kosciukw.petsify.shared.ui.theme.PureWhite
 import pl.kosciukw.petsify.shared.ui.theme.TextBoldS
 import pl.kosciukw.petsify.shared.ui.theme.TextBoldXL
@@ -57,15 +54,24 @@ import pl.kosciukw.petsify.shared.utils.empty
 
 @Composable
 internal fun LoginScreen(
+    state: LoginUiState,
     onNavigateToMain: () -> Unit,
     onNavigateToSignUp: () -> Unit
 ) {
+
+    if(state.isLoading) {
+
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
         Header(modifier = Modifier.fillMaxWidth())
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         LoginForm(
             onNavigateToMain = onNavigateToMain,
             onNavigateToSignUp = onNavigateToSignUp,
@@ -74,16 +80,16 @@ internal fun LoginScreen(
     }
 }
 
-@Preview
-@Composable
-private fun PreviewLoginScreen() {
-    PetsifyTheme {
-        LoginScreen(
-            onNavigateToSignUp = {},
-            onNavigateToMain = {}
-        )
-    }
-}
+//@Preview
+//@Composable
+//private fun PreviewLoginScreen() {
+//    PetsifyTheme {
+//        LoginScreen(
+//            onNavigateToSignUp = {},
+//            onNavigateToMain = {}
+//        )
+//    }
+//}
 
 @Composable
 private fun Header(modifier: Modifier) {
