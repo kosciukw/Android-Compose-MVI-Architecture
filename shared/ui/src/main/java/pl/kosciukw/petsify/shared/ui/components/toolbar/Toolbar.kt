@@ -1,5 +1,6 @@
 package pl.kosciukw.petsify.shared.ui.components.toolbar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

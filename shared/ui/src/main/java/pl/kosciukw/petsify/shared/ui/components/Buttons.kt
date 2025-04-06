@@ -1,9 +1,19 @@
 package pl.kosciukw.petsify.shared.ui.components
 
+import android.widget.Button
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -13,14 +23,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import pl.kosciukw.petsify.shared.ui.theme.GoshawkGrey
 import pl.kosciukw.petsify.shared.ui.theme.TextBoldS
+import pl.kosciukw.petsify.shared.ui.theme.paddingS
 
 @Composable
 fun ButtonRegular(
@@ -31,12 +45,14 @@ fun ButtonRegular(
         containerColor = MaterialTheme.colorScheme.tertiaryContainer
     ),
     textColor: Color = MaterialTheme.colorScheme.onTertiaryContainer,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isButtonEnabled: Boolean = true
 ) {
     Button(
         onClick = { onClick() },
         colors = buttonColors,
-        modifier = modifier
+        modifier = modifier,
+        enabled = isButtonEnabled
     ) {
         Text(
             style = style,
@@ -53,12 +69,16 @@ fun ButtonContent(
         containerColor = MaterialTheme.colorScheme.tertiaryContainer
     ),
     onClick: () -> Unit,
+    shape: Shape = RoundedCornerShape(18.dp),
+    contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
     content: @Composable () -> Unit
 ) {
     Button(
-        onClick = { onClick() },
+        onClick = onClick,
         colors = buttonColors,
-        modifier = modifier
+        modifier = modifier,
+        shape = shape,
+        contentPadding = contentPadding
     ) {
         content()
     }

@@ -19,23 +19,23 @@ import pl.kosciukw.petsify.shared.ui.components.view.ViewEvent
 import pl.kosciukw.petsify.shared.ui.components.view.ViewSingleAction
 import pl.kosciukw.petsify.shared.ui.components.view.ViewState
 
-
-abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, SingleAction : ViewSingleAction> : ViewModel() {
+abstract class BaseViewModel<
+        Event : ViewEvent,
+        UiState : ViewState,
+        SingleAction : ViewSingleAction> : ViewModel() {
 
     abstract fun setInitialState(): UiState
     abstract fun onTriggerEvent(event: Event)
 
     private val initialState: UiState by lazy { setInitialState() }
-    private val _state: MutableState<UiState> = mutableStateOf(initialState)
+    protected val _state: MutableState<UiState> = mutableStateOf(initialState)
     val state = _state
 
     private val _event: MutableSharedFlow<Event> = MutableSharedFlow()
 
-    // Channel for emitting single actions (if needed)
     private val _action: Channel<SingleAction> = Channel()
     val action = _action.receiveAsFlow()
 
-    // Channel for emitting UI errors (Dialogs, Toasts, etc.)
     private val _errors: MutableSharedFlow<UIComponent> = MutableSharedFlow()
     val errors = _errors.asSharedFlow()
 
@@ -43,7 +43,6 @@ abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, SingleActio
         subscribeToEvents()
     }
 
-    // Subscribe to events emitted to the ViewModel
     private fun subscribeToEvents() {
         viewModelScope.launch {
             _event.collect {

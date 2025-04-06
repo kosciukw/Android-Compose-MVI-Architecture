@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Petsify</string>
     <string name="login_screen_welcomd_our_community_today">Welcome to our pet community!</string>
-    <string name="login_screen_login_field">Login*</string>
+    <string name="login_screen_email_field">Email*</string>
+    <string name="login_screen_email_validation_error">Please enter a valid email address</string>
     <string name="login_screen_password_field">Password*</string>
+    <string name="login_screen_password_validation_error">Please enter a valid password</string>
     <string name="login_screen_login_button">Login</string>
     <string name="login_screen_login_new_to_petsify">New to Petsify?</string>
     <string name="login_screen_signup">Sign up</string>

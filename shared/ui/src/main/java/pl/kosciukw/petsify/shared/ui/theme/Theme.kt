@@ -13,15 +13,18 @@ private val DarkColorScheme = darkColorScheme(
   primary = GoshawkGrey,
   secondary = Argent,
   tertiary = BlackLiquorice,
-  background = CleanCanvas,
+  background = PureWhite,
   onBackground = GoshawkGrey,
   surface = CerebralGrey,
   onSurface = GoshawkGrey,
-  surfaceContainer = PureWhite,
+  surfaceContainer = CleanCanvas,
   secondaryContainer = BlackLiquorice,
   onSecondaryContainer = PureWhite,
   tertiaryContainer = Mercury,
-  onTertiaryContainer = GoshawkGrey
+  onTertiaryContainer = GoshawkGrey,
+  error = CoralRed,
+  errorContainer = CoralRed,
+  outline = BlackLiquorice
 )
 
 private val LightColorScheme = DarkColorScheme

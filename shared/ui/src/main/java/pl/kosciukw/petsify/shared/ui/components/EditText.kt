@@ -26,7 +26,9 @@ fun EditText(
         fontSize = TextS,
         textAlign = TextAlign.Start
     ),
-    inputTextStyle: TextStyle = TextRegularS.copy(textAlign = TextAlign.Start)
+    inputTextStyle: TextStyle = TextRegularS.copy(textAlign = TextAlign.Start),
+    errorMessage: String? = null,
+    isErrorMessageEnabled: Boolean = false,
 ) {
     TextField(
         modifier = modifier,
@@ -50,8 +52,22 @@ fun EditText(
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
             focusedBorderColor = MaterialTheme.colorScheme.surface,
-            unfocusedBorderColor = MaterialTheme.colorScheme.surface
+            unfocusedBorderColor = MaterialTheme.colorScheme.surface,
+            errorBorderColor = MaterialTheme.colorScheme.error, // Red border for errors
+            errorTextColor = MaterialTheme.colorScheme.error, // Error text color (red)
         ),
+        isError = isErrorMessageEnabled,
+        supportingText = {
+            if (isErrorMessageEnabled && errorMessage != null) {
+                Text(
+                    text = errorMessage,
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.error,
+                        fontSize = TextS
+                    )
+                )
+            }
+        }
     )
 }
 

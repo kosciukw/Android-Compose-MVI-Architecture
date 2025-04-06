@@ -3,8 +3,8 @@ plugins {
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.kotlin.serialization)
-  kotlin("kapt") // Add this line for kapt support
-  id("dagger.hilt.android.plugin") // Apply Hilt plugin for Gradle
+  alias(libs.plugins.hilt.android.gradle.plugin)
+  kotlin("kapt")
 }
 
 android {
