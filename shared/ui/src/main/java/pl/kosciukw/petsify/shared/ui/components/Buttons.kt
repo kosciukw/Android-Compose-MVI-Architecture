@@ -1,16 +1,8 @@
 package pl.kosciukw.petsify.shared.ui.components
 
-import android.widget.Button
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,18 +15,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import pl.kosciukw.petsify.shared.ui.theme.GoshawkGrey
 import pl.kosciukw.petsify.shared.ui.theme.TextBoldS
-import pl.kosciukw.petsify.shared.ui.theme.paddingS
 
 @Composable
 fun ButtonRegular(
@@ -102,27 +91,27 @@ fun ButtonText(
 
 @Composable
 fun CircleButton(
-    imageVector: ImageVector, // Icon for the button
-    onClick: () -> Unit, // Click action
-    modifier: Modifier = Modifier, // Optional modifier for customization
-    backgroundColor: Color = MaterialTheme.colorScheme.primary, // Default button color
-    contentColor: Color = MaterialTheme.colorScheme.onPrimary, // Default icon color
-    size: Dp = 48.dp // Default button size
+    imageVector: ImageVector,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    size: Dp = 48.dp
 ) {
     Surface(
-        modifier = modifier.size(size), // Set circular size
-        shape = CircleShape, // Makes it round
-        color = backgroundColor, // Background color
-        shadowElevation = 4.dp // Adds slight shadow for depth
+        modifier = modifier.size(size),
+        shape = CircleShape,
+        color = backgroundColor,
+        shadowElevation = 4.dp
     ) {
         IconButton(
-            onClick = onClick, // Handles button click
-            modifier = Modifier.fillMaxSize() // Make it fill the surface
+            onClick = onClick,
+            modifier = Modifier.fillMaxSize()
         ) {
             Icon(
                 imageVector = imageVector,
-                contentDescription = null, // Accessibility: Set description if needed
-                tint = contentColor // Set icon color
+                contentDescription = null,
+                tint = contentColor
             )
         }
     }

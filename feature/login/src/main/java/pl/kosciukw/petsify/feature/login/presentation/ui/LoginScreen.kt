@@ -6,14 +6,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -23,9 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,21 +31,30 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import pl.kosciukw.petsify.feature.login.R
+import pl.kosciukw.petsify.feature.login.presentation.LoginAction
 import pl.kosciukw.petsify.feature.login.presentation.LoginEvent
 import pl.kosciukw.petsify.feature.login.presentation.LoginState
+import pl.kosciukw.petsify.shared.components.Spacer8dp
+import pl.kosciukw.petsify.shared.components.Spacer32dp
+import pl.kosciukw.petsify.shared.data.network.NetworkState
 import pl.kosciukw.petsify.shared.ui.components.BackgroundImage
 import pl.kosciukw.petsify.shared.ui.components.ButtonRegular
 import pl.kosciukw.petsify.shared.ui.components.ButtonText
 import pl.kosciukw.petsify.shared.ui.components.DefaultScreenUI
 import pl.kosciukw.petsify.shared.ui.components.EditText
 import pl.kosciukw.petsify.shared.ui.components.UIComponent
+import pl.kosciukw.petsify.shared.ui.components.progress.ProgressBarState
 import pl.kosciukw.petsify.shared.ui.theme.BlackLiquorice
 import pl.kosciukw.petsify.shared.ui.theme.GoshawkGrey
+import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
 import pl.kosciukw.petsify.shared.ui.theme.PureWhite
 import pl.kosciukw.petsify.shared.ui.theme.TextBoldS
 import pl.kosciukw.petsify.shared.ui.theme.TextBoldXL
@@ -71,8 +75,23 @@ internal fun LoginScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToSignUp: () -> Unit,
     errors: Flow<UIComponent>,
-    events: (LoginEvent) -> Unit
+    events: (LoginEvent) -> Unit,
+    action: Flow<LoginAction>
 ) {
+
+    LaunchedEffect(action) {
+        action.collect { action ->
+            when (action) {
+                is LoginAction.Navigation.NavigateToMain -> {
+                    onNavigateToMain()
+                }
+                else -> {
+                    //no-op
+                }
+            }
+        }
+    }
+
     DefaultScreenUI(
         errors = errors,
         progressBarState = state.progressBarState,
@@ -83,11 +102,16 @@ internal fun LoginScreen(
                     .verticalScroll(rememberScrollState())
             ) {
                 Header(modifier = Modifier.fillMaxWidth())
-
-                Spacer(modifier = Modifier.size(paddingGapM))
-
+                Spacer32dp()
                 LoginForm(
-                    onNavigateToMain = onNavigateToMain,
+                    onLoginButtonClicked = {
+                        events(
+                            LoginEvent.Login(
+                                state.inputEmail,
+                                state.inputPassword
+                            )
+                        )
+                    },
                     onNavigateToSignUp = onNavigateToSignUp,
                     modifier = Modifier.fillMaxWidth(),
                     onEmailTextChanged = { email ->
@@ -118,26 +142,17 @@ private fun Header(modifier: Modifier) {
                 .padding(top = paddingXXL),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-//            TextWithTrailingIcon(
-//                label = stringResource(id = R.string.app_name),
-//                textStyle = TextPrimary,
-//                textColor = GoshawkGrey,
-//                resId = R.drawable.ic_paw_color
-//           )
-
             Text(
                 text = stringResource(id = R.string.app_name),
                 style = TextPrimary,
                 color = GoshawkGrey,
                 modifier = Modifier.padding(top = paddingGapM)
             )
-
             BackgroundImage(
                 modifier = Modifier.padding(top = paddingS),
                 imageId = R.drawable.login_screen_header_image
             )
-
-            Spacer(modifier = Modifier.padding(top = paddingM))
+            Spacer8dp()
         }
     }
 }
@@ -145,7 +160,7 @@ private fun Header(modifier: Modifier) {
 @Composable
 private fun LoginForm(
     modifier: Modifier = Modifier,
-    onNavigateToMain: () -> Unit,
+    onLoginButtonClicked: () -> Unit,
     onNavigateToSignUp: () -> Unit,
     onEmailTextChanged: (String) -> Unit,
     onPasswordTextChanged: (String) -> Unit,
@@ -180,6 +195,7 @@ private fun LoginForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = paddingS),
+            inputType = KeyboardType.Password,
             trailingIcon = ImageVector.vectorResource(id = R.drawable.ic_bone),
             label = stringResource(id = R.string.login_screen_password_field),
             text = state.inputPassword,
@@ -206,7 +222,7 @@ private fun LoginForm(
             buttonColors = ButtonDefaults.buttonColors(
                 containerColor = BlackLiquorice
             ),
-            onClick = onNavigateToMain,
+            onClick = onLoginButtonClicked,
             label = stringResource(id = R.string.login_screen_login_button),
             textColor = PureWhite,
             isButtonEnabled = state.isLoginButtonEnabled
@@ -242,13 +258,13 @@ private fun LoginForm(
                 .height(50.dp)
                 .padding(top = paddingM),
             style = TextBoldS,
-            onClick = onNavigateToMain,
+            onClick = { TODO() },
             label = stringResource(id = R.string.login_screen_google_login_button),
             isButtonEnabled = true,
             painter = painterResource(id = R.drawable.ic_google)
         )
 
-        Spacer(modifier = Modifier.size(paddingGapM))
+        Spacer32dp()
     }
 }
 
@@ -299,13 +315,25 @@ private fun LoginWithGoogleButton(
     }
 }
 
-//@Preview
-//@Composable
-//private fun PreviewLoginScreen() {
-//    PetsifyTheme {
-//        LoginScreen(
-//            onNavigateToSignUp = {},
-//            onNavigateToMain = {}
-//        )
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+private fun PreviewLoginScreen() {
+    PetsifyTheme {
+        LoginScreen(
+            onNavigateToMain = {},
+            onNavigateToSignUp = {},
+            errors = flowOf(),
+            events = {},
+            action = flowOf(),
+            state = LoginState(
+                inputEmail = "test@example.com",
+                inputPassword = "password123",
+                progressBarState = ProgressBarState.Idle,
+                isEmailValidationErrorEnabled = true,
+                isPasswordValidationErrorEnabled = true,
+                networkState = NetworkState.Established,
+                isLoginButtonEnabled = true
+            )
+        )
+    }
+}

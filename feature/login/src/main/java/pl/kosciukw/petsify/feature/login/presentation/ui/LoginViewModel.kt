@@ -26,19 +26,17 @@ class LoginViewModel @Inject constructor(
 ) : BaseViewModel<LoginEvent, LoginState, LoginAction>() {
 
     override fun setInitialState() = LoginState()
-
     private var identifierState: IdentifierState = IdentifierState.Invalid
-
     private var isPasswordValid: Boolean = false
     private var isEmailValid: Boolean = false
-
-    private var emailIdentifier: EmailIdentifier? = null
 
     override fun onTriggerEvent(event: LoginEvent) {
 
         when (event) {
             is LoginEvent.Login -> {
-                login()
+                val email = event.email
+                val password = event.password
+                login(email, password)
             }
 
             is LoginEvent.OnEmailTextChanged -> {
@@ -59,18 +57,15 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun login() {
-        val currentState = _state.value
-        if (currentState.inputEmail.isBlank() || currentState.inputPassword.isBlank()) {
-            //_state.update { it.copy(shouldShowEmptyValidationError = true) }
-            return
-        }
-
+    private fun login(
+        email: String,
+        password: String
+    ) {
         viewModelScope.launch {
             loginUseCase.action(
                 LoginUseCase.Params(
-                    currentState.inputEmail,
-                    currentState.inputPassword
+                    email,
+                    password
                 )
             ).collect { result ->
                 when (result) {
@@ -81,6 +76,7 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is ResultOrFailure.Success -> {
+                        println("TEST_TAG success")
                         _state.value = _state.value.copy(
                             progressBarState = ProgressBarState.Idle
                         )
@@ -91,6 +87,8 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is ResultOrFailure.Failure -> {
+                        println("TEST_TAG failure: ${result.error.message}")
+
                         _state.value = _state.value.copy(
                             progressBarState = ProgressBarState.Idle
                         )
@@ -115,11 +113,11 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun onEmailTextChanged(email: CharArray) {
-        emailIdentifier = EmailIdentifier(email = email).also { identifier ->
+        EmailIdentifier(email = email).also { identifier ->
             identifierState = emailIdentifierValidator.isValid(identifier = identifier)
         }
 
-        isEmailValid = identifierState !in setOf(IdentifierState.Invalid, IdentifierState.Empty)
+        isEmailValid = identifierState is IdentifierState.Valid
         setState {
             copy(
                 inputEmail = email.concatToString(),

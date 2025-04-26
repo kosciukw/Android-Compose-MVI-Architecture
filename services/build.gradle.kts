@@ -39,12 +39,13 @@ android {
 
 dependencies {
     implementation(projects.shared.ui)
-
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-
-    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.gson)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

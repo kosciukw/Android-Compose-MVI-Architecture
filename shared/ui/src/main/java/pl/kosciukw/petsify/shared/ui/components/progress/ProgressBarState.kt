@@ -1,4 +1,5 @@
 package pl.kosciukw.petsify.shared.ui.components.progress
+
 sealed class ProgressBarState{
 
    data object ButtonLoading: ProgressBarState()

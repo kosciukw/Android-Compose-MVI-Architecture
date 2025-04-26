@@ -17,13 +17,15 @@ fun NavGraphBuilder.loginScreen(
     composable<LoginDestination> {
         val loginViewModel: LoginViewModel = hiltViewModel()
         val state = loginViewModel.state.value
+        val action = loginViewModel.action
 
         LoginScreen(
             state = state,
             onNavigateToMain = onNavigateToMain,
             onNavigateToSignUp = onNavigateToSignUp,
             errors = loginViewModel.errors,
-            events = { event -> loginViewModel.setEvent(event) }
+            events = { event -> loginViewModel.setEvent(event) },
+            action = action
         )
     }
 }

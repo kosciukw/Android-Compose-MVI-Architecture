@@ -1,6 +1,7 @@
 package pl.kosciukw.petsify.shared.ui.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,6 +13,9 @@ import pl.kosciukw.petsify.shared.ui.theme.TextRegularS
 import pl.kosciukw.petsify.shared.ui.theme.TextS
 import pl.kosciukw.petsify.shared.ui.theme.TextSecondary
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import pl.kosciukw.petsify.shared.utils.empty
 
 @Composable
@@ -26,10 +30,14 @@ fun EditText(
         fontSize = TextS,
         textAlign = TextAlign.Start
     ),
+    inputType: KeyboardType = KeyboardType.Text,
     inputTextStyle: TextStyle = TextRegularS.copy(textAlign = TextAlign.Start),
     errorMessage: String? = null,
     isErrorMessageEnabled: Boolean = false,
 ) {
+    val transformation = if (inputType == KeyboardType.Password) PasswordVisualTransformation()
+    else VisualTransformation.None
+
     TextField(
         modifier = modifier,
         value = text,
@@ -42,6 +50,9 @@ fun EditText(
                 text = label
             )
         },
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = inputType
+        ),
         textStyle = inputTextStyle,
         trailingIcon = {
             Icon(
@@ -53,8 +64,8 @@ fun EditText(
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
             focusedBorderColor = MaterialTheme.colorScheme.surface,
             unfocusedBorderColor = MaterialTheme.colorScheme.surface,
-            errorBorderColor = MaterialTheme.colorScheme.error, // Red border for errors
-            errorTextColor = MaterialTheme.colorScheme.error, // Error text color (red)
+            errorBorderColor = MaterialTheme.colorScheme.error,
+            errorTextColor = MaterialTheme.colorScheme.error,
         ),
         isError = isErrorMessageEnabled,
         supportingText = {
@@ -67,7 +78,8 @@ fun EditText(
                     )
                 )
             }
-        }
+        },
+        visualTransformation = transformation
     )
 }
 
