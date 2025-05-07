@@ -1,9 +1,7 @@
-package com.kosciukw.services.data.user.service
+package com.kosciukw.services.data.user.service.user
 
 import com.kosciukw.services.data.user.model.api.response.AccessTokenApiModel
 import com.kosciukw.services.data.user.model.domain.PairByPasswordDomainModel
-import com.kosciukw.services.data.user.model.domain.UserDomainModel
-import pl.kosciukw.petsify.shared.result.ResultOrFailure
 
 interface UserService {
 

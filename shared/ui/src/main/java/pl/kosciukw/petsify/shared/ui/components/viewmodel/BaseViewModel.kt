@@ -4,25 +4,23 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import pl.kosciukw.petsify.shared.data.DataState
-import pl.kosciukw.petsify.shared.data.network.NetworkState
+import pl.kosciukw.petsify.shared.error.AppError
+import pl.kosciukw.petsify.shared.error.DomainError
+import pl.kosciukw.petsify.shared.error.mapper.IntegrationErrorMapper
 import pl.kosciukw.petsify.shared.ui.components.UIComponent
-import pl.kosciukw.petsify.shared.ui.components.progress.ProgressBarState
 import pl.kosciukw.petsify.shared.ui.components.view.ViewEvent
 import pl.kosciukw.petsify.shared.ui.components.view.ViewSingleAction
 import pl.kosciukw.petsify.shared.ui.components.view.ViewState
 
-abstract class BaseViewModel<
-        Event : ViewEvent,
-        UiState : ViewState,
-        SingleAction : ViewSingleAction> : ViewModel() {
+abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, SingleAction : ViewSingleAction>(
+    private val integrationErrorMapper: IntegrationErrorMapper
+) : ViewModel() {
 
     abstract fun setInitialState(): UiState
     abstract fun onTriggerEvent(event: Event)
@@ -68,27 +66,51 @@ abstract class BaseViewModel<
         viewModelScope.launch { _action.send(effectValue) }
     }
 
-    // Send an error (UIComponent) to be displayed in the UI
-    protected fun setError(builder: () -> UIComponent) {
-        val effectValue = builder()
-        viewModelScope.launch {
-            _errors.emit(effectValue)  // Emit error to be displayed in UI
+    private fun setError(uiComponent: () -> UIComponent) {
+        viewModelScope.launch(Dispatchers.Main) {
+            _errors.emit(uiComponent())
         }
     }
 
-    fun <T> executeUseCase(
-        flow: Flow<DataState<T>>,
-        onSuccess: (T?) -> Unit,
-        onLoading: (ProgressBarState) -> Unit,
-        onNetworkStatus: (NetworkState) -> Unit = {}
+    open fun onFailure(
+        retry: () -> Unit = {},
+        onErrorAcknowledged: () -> Unit = {},
+        error: Throwable,
+        showMessage: Boolean = true
     ) {
-        viewModelScope.launch {
-            flow.collectLatest { dataState ->
-                when (dataState) {
-                    is DataState.NetworkStatus -> onNetworkStatus(dataState.networkState)
-                    is DataState.Response -> setError { dataState.uiComponent }  // Error handling
-                    is DataState.Data -> onSuccess(dataState.data)  // Handle success
-                    is DataState.Loading -> onLoading(dataState.progressBarState)  // Handle loading state
+
+        when (error) {
+            is DomainError -> processDomainError(
+                retry = retry,
+                onErrorAcknowledged = onErrorAcknowledged,
+                error = error,
+                showMessage = showMessage
+            )
+
+            else -> {
+               //no-op
+            }
+        }
+    }
+
+    private fun processDomainError(
+        retry: () -> Unit = {},
+        onErrorAcknowledged: () -> Unit = {},
+        error: DomainError,
+        showMessage: Boolean = true
+    ) {
+        integrationErrorMapper.map(error = error).let { appError ->
+            when (appError) {
+                is AppError.InfoError -> setError {
+                    UIComponent.ToastSimple(title = appError.message)
+                }
+
+                is AppError.TechnicalError.SessionExpired -> {
+                    //no-op
+                }
+
+                else -> {
+                    //no-op
                 }
             }
         }

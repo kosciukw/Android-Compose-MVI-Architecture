@@ -15,8 +15,8 @@ import com.kosciukw.services.data.user.mapper.UserApiToDomainErrorMapper
 import com.kosciukw.services.data.user.repository.UserRepository
 import com.kosciukw.services.data.user.repository.error.UserApiToDomainErrorMapperImpl
 import com.kosciukw.services.data.user.repository.impl.UserRepositoryRemoteImpl
-import com.kosciukw.services.data.user.service.UserService
-import com.kosciukw.services.data.user.service.UserServiceImpl
+import com.kosciukw.services.data.user.service.user.UserService
+import com.kosciukw.services.data.user.service.user.impl.UserServiceImpl
 import com.kosciukw.services.error.ErrorResponse
 import com.kosciukw.services.mapper.HttpExceptionToErrorResponseMapper
 import com.kosciukw.services.mapper.impl.HttpExceptionToErrorResponseMapperImpl

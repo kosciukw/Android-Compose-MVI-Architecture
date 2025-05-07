@@ -9,6 +9,7 @@ import pl.kosciukw.petsify.feature.login.presentation.LoginEvent
 import pl.kosciukw.petsify.feature.login.presentation.LoginState
 import pl.kosciukw.petsify.feature.login.usecase.LoginUseCase
 import pl.kosciukw.petsify.shared.data.network.NetworkState
+import pl.kosciukw.petsify.shared.error.mapper.IntegrationErrorMapper
 import pl.kosciukw.petsify.shared.result.ResultOrFailure
 import pl.kosciukw.petsify.shared.ui.components.progress.ProgressBarState
 import pl.kosciukw.petsify.shared.ui.components.viewmodel.BaseViewModel
@@ -22,8 +23,11 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val emailIdentifierValidator: EmailIdentifierValidator,
-    private val notEmptyValidator: NotEmptyValidator<CharArray>
-) : BaseViewModel<LoginEvent, LoginState, LoginAction>() {
+    private val notEmptyValidator: NotEmptyValidator<CharArray>,
+    integrationErrorMapper: IntegrationErrorMapper
+) : BaseViewModel<LoginEvent, LoginState, LoginAction>(
+    integrationErrorMapper = integrationErrorMapper
+) {
 
     override fun setInitialState() = LoginState()
     private var identifierState: IdentifierState = IdentifierState.Invalid
@@ -76,7 +80,6 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is ResultOrFailure.Success -> {
-                        println("TEST_TAG success")
                         _state.value = _state.value.copy(
                             progressBarState = ProgressBarState.Idle
                         )
@@ -87,7 +90,7 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is ResultOrFailure.Failure -> {
-                        println("TEST_TAG failure: ${result.error.message}")
+                        onFailure(error = result.error)
 
                         _state.value = _state.value.copy(
                             progressBarState = ProgressBarState.Idle

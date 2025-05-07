@@ -31,7 +31,7 @@ fun CreateUIComponentDialog(
 }
 
 @Composable
-fun GenericDialog(
+private fun GenericDialog(
     modifier: Modifier = Modifier,
     title: String,
     description: String,

@@ -1,5 +1,6 @@
 package pl.kosciukw.petsify.feature.login.presentation.ui
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -45,6 +47,7 @@ import pl.kosciukw.petsify.feature.login.presentation.LoginState
 import pl.kosciukw.petsify.shared.components.Spacer8dp
 import pl.kosciukw.petsify.shared.components.Spacer32dp
 import pl.kosciukw.petsify.shared.data.network.NetworkState
+import pl.kosciukw.petsify.shared.extensions.makeToast
 import pl.kosciukw.petsify.shared.ui.components.BackgroundImage
 import pl.kosciukw.petsify.shared.ui.components.ButtonRegular
 import pl.kosciukw.petsify.shared.ui.components.ButtonText
@@ -76,15 +79,16 @@ internal fun LoginScreen(
     onNavigateToSignUp: () -> Unit,
     errors: Flow<UIComponent>,
     events: (LoginEvent) -> Unit,
-    action: Flow<LoginAction>
+    action: Flow<LoginAction>,
+    context: Context
 ) {
-
     LaunchedEffect(action) {
         action.collect { action ->
             when (action) {
                 is LoginAction.Navigation.NavigateToMain -> {
                     onNavigateToMain()
                 }
+
                 else -> {
                     //no-op
                 }
@@ -120,7 +124,8 @@ internal fun LoginScreen(
                     onPasswordTextChanged = { password ->
                         events(LoginEvent.OnPasswordTextChanged(password))
                     },
-                    state = state
+                    state = state,
+                    context = context
                 )
             }
         }
@@ -164,7 +169,8 @@ private fun LoginForm(
     onNavigateToSignUp: () -> Unit,
     onEmailTextChanged: (String) -> Unit,
     onPasswordTextChanged: (String) -> Unit,
-    state: LoginState
+    state: LoginState,
+    context: Context
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -177,7 +183,7 @@ private fun LoginForm(
             modifier = Modifier.padding(paddingM)
         )
 
-        //Email
+        // Email
         EditText(
             modifier = Modifier
                 .fillMaxWidth()
@@ -190,7 +196,7 @@ private fun LoginForm(
             errorMessage = stringResource(id = R.string.login_screen_email_validation_error),
         )
 
-        //Password
+        // Password
         EditText(
             modifier = Modifier
                 .fillMaxWidth()
@@ -212,7 +218,7 @@ private fun LoginForm(
                 .fillMaxWidth()
         )
 
-        //Login Button
+        // Login Button
         ButtonRegular(
             modifier = Modifier
                 .fillMaxWidth()
@@ -258,7 +264,9 @@ private fun LoginForm(
                 .height(50.dp)
                 .padding(top = paddingM),
             style = TextBoldS,
-            onClick = { TODO() },
+            onClick = {
+                context.makeToast(message = "Login with google button clicked")
+            },
             label = stringResource(id = R.string.login_screen_google_login_button),
             isButtonEnabled = true,
             painter = painterResource(id = R.drawable.ic_google)
@@ -333,7 +341,8 @@ private fun PreviewLoginScreen() {
                 isPasswordValidationErrorEnabled = true,
                 networkState = NetworkState.Established,
                 isLoginButtonEnabled = true
-            )
+            ),
+            context = LocalContext.current
         )
     }
 }

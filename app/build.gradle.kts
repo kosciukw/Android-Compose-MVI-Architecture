@@ -54,6 +54,7 @@ dependencies {
 
   implementation(libs.kotlinx.metadata.jvm)
   implementation(libs.hilt.android)
+  implementation(project(":services"))
   kapt(libs.hilt.compiler)
   implementation(libs.androidx.hilt.navigation.compose)
 

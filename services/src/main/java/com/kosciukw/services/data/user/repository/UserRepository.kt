@@ -7,6 +7,5 @@ import pl.kosciukw.petsify.shared.result.ResultOrFailure
 
 interface UserRepository {
 
-//    suspend fun pairDeviceByPassword(request: PairByPasswordDomainModel): ResultOrFailure<AccessTokenApiModel, Throwable>
     suspend fun pairDeviceByPassword(request: PairByPasswordDomainModel): AccessTokenApiModel
 }
