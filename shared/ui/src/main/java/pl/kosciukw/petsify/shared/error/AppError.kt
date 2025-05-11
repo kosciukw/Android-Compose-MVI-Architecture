@@ -3,9 +3,9 @@ package pl.kosciukw.petsify.shared.error
 sealed class AppError(override val message: String) : Throwable(message) {
 
     class InfoError(
-        val description: String,
-        message: String
-    ) : AppError(message = message)
+        val uiMessage: String,
+        technicalMessage: String
+    ) : AppError(message = technicalMessage)
 
     sealed class TechnicalError(
         message: String

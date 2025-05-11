@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
 import pl.kosciukw.petsify.shared.utils.empty
 
+//TODO 10.05.2025: To be deleted
 @Composable
 internal fun EmailsListScreen(
   onOpenEmailDetails: (id: Int) -> Unit,

@@ -8,6 +8,5 @@ class UserUrlProviderImpl : UserUrlProvider {
 
     companion object {
         private const val PAIR_BY_PASSWORD_URL = "/auth/login"
-//        private const val BASE_URL = "http://192.168.0.129:8080/"
     }
 }

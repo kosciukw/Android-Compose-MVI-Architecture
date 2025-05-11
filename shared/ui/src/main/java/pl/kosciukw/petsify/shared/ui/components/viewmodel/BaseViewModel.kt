@@ -102,7 +102,7 @@ abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, SingleActio
         integrationErrorMapper.map(error = error).let { appError ->
             when (appError) {
                 is AppError.InfoError -> setError {
-                    UIComponent.ToastSimple(title = appError.message)
+                    UIComponent.ToastSimple(title = appError.uiMessage)
                 }
 
                 is AppError.TechnicalError.SessionExpired -> {

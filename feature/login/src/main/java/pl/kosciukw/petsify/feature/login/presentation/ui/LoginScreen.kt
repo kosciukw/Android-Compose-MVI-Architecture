@@ -46,7 +46,6 @@ import pl.kosciukw.petsify.feature.login.presentation.LoginEvent
 import pl.kosciukw.petsify.feature.login.presentation.LoginState
 import pl.kosciukw.petsify.shared.components.Spacer8dp
 import pl.kosciukw.petsify.shared.components.Spacer32dp
-import pl.kosciukw.petsify.shared.data.network.NetworkState
 import pl.kosciukw.petsify.shared.extensions.makeToast
 import pl.kosciukw.petsify.shared.ui.components.BackgroundImage
 import pl.kosciukw.petsify.shared.ui.components.ButtonRegular
@@ -71,6 +70,7 @@ import pl.kosciukw.petsify.shared.ui.theme.paddingS
 import pl.kosciukw.petsify.shared.ui.theme.paddingXL
 import pl.kosciukw.petsify.shared.ui.theme.paddingXXL
 import pl.kosciukw.petsify.shared.utils.empty
+import pl.kosciukw.petsify.shared.ui.R as SharedR
 
 @Composable
 internal fun LoginScreen(
@@ -148,7 +148,7 @@ private fun Header(modifier: Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = SharedR.string.app_name),
                 style = TextPrimary,
                 color = GoshawkGrey,
                 modifier = Modifier.padding(top = paddingGapM)
@@ -177,7 +177,7 @@ private fun LoginForm(
         modifier = modifier.padding(horizontal = paddingL)
     ) {
         Text(
-            text = stringResource(id = R.string.login_screen_welcomd_our_community_today),
+            text = stringResource(id = SharedR.string.login_screen_welcomd_our_community_today),
             style = TextBoldXL,
             color = GoshawkGrey,
             modifier = Modifier.padding(paddingM)
@@ -189,11 +189,11 @@ private fun LoginForm(
                 .fillMaxWidth()
                 .padding(bottom = paddingS),
             trailingIcon = ImageVector.vectorResource(id = R.drawable.ic_paw),
-            label = stringResource(id = R.string.login_screen_email_field),
+            label = stringResource(id = SharedR.string.login_screen_email_field),
             text = state.inputEmail,
             onTextChange = { email -> onEmailTextChanged(email) },
             isErrorMessageEnabled = state.isEmailValidationErrorEnabled,
-            errorMessage = stringResource(id = R.string.login_screen_email_validation_error),
+            errorMessage = stringResource(id = SharedR.string.login_screen_email_validation_error),
         )
 
         // Password
@@ -203,15 +203,15 @@ private fun LoginForm(
                 .padding(bottom = paddingS),
             inputType = KeyboardType.Password,
             trailingIcon = ImageVector.vectorResource(id = R.drawable.ic_bone),
-            label = stringResource(id = R.string.login_screen_password_field),
+            label = stringResource(id = SharedR.string.login_screen_password_field),
             text = state.inputPassword,
             onTextChange = { password -> onPasswordTextChanged(password) },
-            errorMessage = stringResource(id = R.string.login_screen_password_validation_error),
+            errorMessage = stringResource(id = SharedR.string.login_screen_password_validation_error),
             isErrorMessageEnabled = state.isPasswordValidationErrorEnabled
         )
 
         Text(
-            text = stringResource(id = R.string.login_screen_forgot_password),
+            text = stringResource(id = SharedR.string.login_screen_forgot_password),
             style = TextRegularS.copy(textAlign = TextAlign.End, fontSize = TextS),
             modifier = Modifier
                 .padding(vertical = paddingM)
@@ -229,7 +229,7 @@ private fun LoginForm(
                 containerColor = BlackLiquorice
             ),
             onClick = onLoginButtonClicked,
-            label = stringResource(id = R.string.login_screen_login_button),
+            label = stringResource(id = SharedR.string.login_screen_login_button),
             textColor = PureWhite,
             isButtonEnabled = state.isLoginButtonEnabled
         )
@@ -239,21 +239,21 @@ private fun LoginForm(
             modifier = Modifier.padding(top = paddingXL)
         ) {
             Text(
-                text = stringResource(id = R.string.login_screen_login_new_to_petsify),
+                text = stringResource(id = SharedR.string.login_screen_login_new_to_petsify),
                 style = TextRegularS
             )
 
             ButtonText(
                 modifier = Modifier.padding(start = paddingS),
                 onClick = onNavigateToSignUp,
-                label = stringResource(id = R.string.login_screen_signup),
+                label = stringResource(id = SharedR.string.login_screen_signup),
                 style = TextBoldS,
                 textColor = GoshawkGrey
             )
         }
 
         Text(
-            text = stringResource(id = R.string.login_screen_or),
+            text = stringResource(id = SharedR.string.login_screen_or),
             style = TextRegularS,
             modifier = Modifier.padding(vertical = paddingL)
         )
@@ -267,7 +267,7 @@ private fun LoginForm(
             onClick = {
                 context.makeToast(message = "Login with google button clicked")
             },
-            label = stringResource(id = R.string.login_screen_google_login_button),
+            label = stringResource(id = SharedR.string.login_screen_google_login_button),
             isButtonEnabled = true,
             painter = painterResource(id = R.drawable.ic_google)
         )
@@ -339,7 +339,7 @@ private fun PreviewLoginScreen() {
                 progressBarState = ProgressBarState.Idle,
                 isEmailValidationErrorEnabled = true,
                 isPasswordValidationErrorEnabled = true,
-                networkState = NetworkState.Established,
+                //networkState = NetworkState.Established,
                 isLoginButtonEnabled = true
             ),
             context = LocalContext.current

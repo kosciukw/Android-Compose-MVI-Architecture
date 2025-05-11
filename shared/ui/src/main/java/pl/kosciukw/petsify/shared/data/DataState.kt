@@ -1,7 +1,6 @@
 package pl.kosciukw.petsify.shared.data
 
 import pl.kosciukw.petsify.shared.ui.components.UIComponent
-import pl.kosciukw.petsify.shared.data.network.NetworkState
 import pl.kosciukw.petsify.shared.ui.components.progress.ProgressBarState
 
 sealed class DataState<T> {

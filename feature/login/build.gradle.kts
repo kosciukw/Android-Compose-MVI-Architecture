@@ -34,6 +34,12 @@ android {
   kotlinOptions {
     jvmTarget = libs.versions.javaVersion.get()
   }
+  testOptions {
+    unitTests.isIncludeAndroidResources = true
+    unitTests.all {
+      it.useJUnitPlatform()
+    }
+  }
 }
 
 dependencies {
@@ -48,4 +54,7 @@ dependencies {
   androidTestImplementation(libs.androidx.espresso.core)
 
   testImplementation(libs.junit)
+  testImplementation(libs.bundles.junit5)
+  testImplementation(libs.mockk)
+  testImplementation(libs.kotlinxCoroutinesTest)
 }

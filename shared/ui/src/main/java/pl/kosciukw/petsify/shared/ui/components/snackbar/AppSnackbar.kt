@@ -7,16 +7,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import pl.kosciukw.petsify.shared.ui.theme.BodyM
+import pl.kosciukw.petsify.shared.ui.R as SharedR
 
 @Composable
 fun AppSnackbar(
     modifier: Modifier,
-    isSnackbarVisible: Boolean,
+    isVisible: Boolean,
     title: String,
     onDismiss: () -> Unit
 ) {
-    if (isSnackbarVisible) {
+    if (isVisible) {
         Snackbar(
             modifier = modifier
                 .padding(BodyM),
@@ -25,7 +27,7 @@ fun AppSnackbar(
             action = {
                 TextButton(onClick = onDismiss) {
                     Text(
-                        text = "OK", // TODO: move to strings.xml
+                        text = stringResource(SharedR.string.ok_button),
                         color = MaterialTheme.colorScheme.primary
                     )
                 }

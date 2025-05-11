@@ -9,7 +9,7 @@ class UserServiceImpl @Inject constructor(
     private val userRepository: UserRepository
 ) : UserService {
 
-    override suspend fun loginDeviceByPassword(
+    override suspend fun pairDeviceByPassword(
         request: PairByPasswordDomainModel
     ) = userRepository.pairDeviceByPassword(request)
 }

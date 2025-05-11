@@ -57,7 +57,7 @@ object UserModule {
     @Named("UserApiRetrofit")
     fun provideUserRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.0.33:8080/") //TODO ip się zmienia
+            .baseUrl("http://192.168.0.129:8080/") //TODO 10.05.2025 ip is not constant
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -125,6 +125,6 @@ object UserModule {
     }
 
     @Provides
-    fun provideErrorResponseToUserApiExceptionMapper():
-            ErrorResponseToUserApiExceptionMapper = ErrorResponseToUserApiExceptionMapperImpl()
+    fun provideErrorResponseToUserApiExceptionMapper(): ErrorResponseToUserApiExceptionMapper =
+        ErrorResponseToUserApiExceptionMapperImpl()
 }

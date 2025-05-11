@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
 
+//TODO 10.05.2025: To be refactored/deleted
 @Composable
 internal fun ProfileScreen() {
   Scaffold(

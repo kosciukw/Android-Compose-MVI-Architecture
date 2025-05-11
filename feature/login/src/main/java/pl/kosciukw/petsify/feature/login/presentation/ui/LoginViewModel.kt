@@ -7,7 +7,7 @@ import pl.kosciukw.petsify.feature.login.domain.EmailIdentifierValidator
 import pl.kosciukw.petsify.feature.login.presentation.LoginAction
 import pl.kosciukw.petsify.feature.login.presentation.LoginEvent
 import pl.kosciukw.petsify.feature.login.presentation.LoginState
-import pl.kosciukw.petsify.feature.login.usecase.LoginUseCase
+import pl.kosciukw.petsify.feature.login.usecase.PairDeviceUseCase
 import pl.kosciukw.petsify.shared.data.network.NetworkState
 import pl.kosciukw.petsify.shared.error.mapper.IntegrationErrorMapper
 import pl.kosciukw.petsify.shared.result.ResultOrFailure
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
+    private val pairDeviceUseCase: PairDeviceUseCase,
     private val emailIdentifierValidator: EmailIdentifierValidator,
     private val notEmptyValidator: NotEmptyValidator<CharArray>,
     integrationErrorMapper: IntegrationErrorMapper
@@ -51,12 +51,8 @@ class LoginViewModel @Inject constructor(
                 onPasswordTextChanged(event.value.toCharArray())
             }
 
-            is LoginEvent.OnRetryNetwork -> {
-                onRetryNetwork()
-            }
-
-            is LoginEvent.OnUpdateNetworkState -> {
-                onUpdateNetworkState(event.networkState)
+            else -> {
+                //no-op
             }
         }
     }
@@ -66,8 +62,8 @@ class LoginViewModel @Inject constructor(
         password: String
     ) {
         viewModelScope.launch {
-            loginUseCase.action(
-                LoginUseCase.Params(
+            pairDeviceUseCase.action(
+                PairDeviceUseCase.Params(
                     email,
                     password
                 )

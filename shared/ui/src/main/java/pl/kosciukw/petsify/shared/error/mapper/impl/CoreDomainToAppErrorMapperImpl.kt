@@ -1,12 +1,15 @@
 package pl.kosciukw.petsify.shared.error.mapper.impl
 
+import android.content.Context
 import pl.kosciukw.petsify.shared.error.AppError
 import pl.kosciukw.petsify.shared.error.CoreDomainError
 import pl.kosciukw.petsify.shared.error.DomainError
 import pl.kosciukw.petsify.shared.error.mapper.CoreDomainToAppErrorMapper
+import javax.inject.Inject
+import pl.kosciukw.petsify.shared.ui.R as SharedR
 
-class CoreDomainToAppErrorMapperImpl(
-//    private val context: Context
+class CoreDomainToAppErrorMapperImpl @Inject constructor(
+    private val context: Context
 ) : CoreDomainToAppErrorMapper {
 
     override fun map(error: DomainError) = when (error) {
@@ -16,8 +19,8 @@ class CoreDomainToAppErrorMapperImpl(
 
     private fun mapCoreDomainError(error: CoreDomainError) = when (error) {
         is CoreDomainError.NoInternetConnection -> AppError.InfoError(
-            description = error.message,//context.getString(R.string.ConnectionLostDialog_MessageLabel_Text),
-            message = "No internet exception"
+            uiMessage = context.getString(SharedR.string.error_no_internet_connection),
+            technicalMessage = error.message
         )
 
         is CoreDomainError.NoSession -> AppError.TechnicalError.SessionExpired(

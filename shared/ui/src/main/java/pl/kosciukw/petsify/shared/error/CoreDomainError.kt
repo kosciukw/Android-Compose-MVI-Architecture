@@ -6,7 +6,6 @@ sealed class CoreDomainError(message: String) : DomainError(message = HEADER + m
 
     class NoCertificatePinning(message: String?) : CoreDomainError(message ?: "No certificate pinning error")
 
-    //Todo dorobić CoreDomainToApp error mapper
     class NoInternetConnection(message: String) : CoreDomainError(message)
 
     class UnexpectedMissingData(vararg missingData: String?) : CoreDomainError(

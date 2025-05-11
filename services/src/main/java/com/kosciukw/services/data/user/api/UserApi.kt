@@ -8,7 +8,6 @@ import retrofit2.http.Url
 
 interface UserApi {
 
-//    @FormUrlEncoded
     @POST
     suspend fun pairByPassword(
         @Url url: String,

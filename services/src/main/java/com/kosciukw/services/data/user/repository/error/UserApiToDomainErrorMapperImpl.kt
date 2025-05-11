@@ -24,8 +24,11 @@ class UserApiToDomainErrorMapperImpl : UserApiToDomainErrorMapper {
             message = error.message ?: "Http request cancelled"
         )
 
-
         is UserApiError.ValidationError -> UserDomainError.ValidationError(
+            message = error.message
+        )
+
+        is UserApiError.AuthError -> UserDomainError.AuthenticationError(
             message = error.message
         )
 
@@ -33,7 +36,6 @@ class UserApiToDomainErrorMapperImpl : UserApiToDomainErrorMapper {
             message = error.message ?: "Unknown error occurred"
         )
 
-//        is UserApiError.AuthError -> TODO()
 //        is UserApiError.HttpErrorUser -> TODO()
 //        is UserApiError.NotFoundError -> TODO()
     }

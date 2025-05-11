@@ -15,46 +15,53 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
+import pl.kosciukw.petsify.shared.ui.R as SharedR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SignUpScreen(
-  onNavigateToMain: () -> Unit,
-  onNavigateUp: () -> Unit
+    onNavigateToMain: () -> Unit,
+    onNavigateUp: () -> Unit
 ) {
-  Scaffold(
-    topBar = {
-      CenterAlignedTopAppBar(
-        navigationIcon = {
-          IconButton(onClick = onNavigateUp) {
-            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, "Navigate Up")
-          }
-        },
-        title = { Text(text = "Sign Up") }
-      )
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onNavigateUp) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(id = SharedR.string.navigate_up_content_description)
+                        )
+                    }
+                },
+                title = { Text(text = stringResource(id = SharedR.string.sign_up_screen_header)) }
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center
+        ) {
+            Button(onClick = onNavigateToMain) {
+                Text(text = stringResource(id = SharedR.string.sign_up_screen_header))
+            }
+        }
     }
-  ) { paddingValues ->
-    Box(
-      modifier = Modifier.fillMaxSize().padding(paddingValues),
-      contentAlignment = Alignment.Center
-    ) {
-      Button(onClick = onNavigateToMain) {
-        Text(text = "Sign Up")
-      }
-    }
-  }
 }
 
 
 @Preview
 @Composable
 private fun PreviewSignUpScreen() {
-  PetsifyTheme {
-    SignUpScreen(
-      onNavigateToMain = {},
-      onNavigateUp = {}
-    )
-  }
+    PetsifyTheme {
+        SignUpScreen(
+            onNavigateToMain = {},
+            onNavigateUp = {}
+        )
+    }
 }

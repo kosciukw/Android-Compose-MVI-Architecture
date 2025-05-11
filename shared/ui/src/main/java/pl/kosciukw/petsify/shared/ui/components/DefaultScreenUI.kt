@@ -1,7 +1,6 @@
 package pl.kosciukw.petsify.shared.ui.components
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +16,6 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.flow.Flow
 import pl.kosciukw.petsify.shared.components.LoadingScreen
 import pl.kosciukw.petsify.shared.ui.components.dialog.CreateUIComponentDialog
-import pl.kosciukw.petsify.shared.data.network.NetworkState
 import pl.kosciukw.petsify.shared.ui.components.progress.ProgressBarState
 import pl.kosciukw.petsify.shared.ui.components.snackbar.AppSnackbar
 import pl.kosciukw.petsify.shared.ui.components.toolbar.ToolbarConfig
@@ -69,7 +67,7 @@ fun DefaultScreenUI(
                         isSnackbarVisible.value = true
                         AppSnackbar(
                             title = uiComponent.title,
-                            isSnackbarVisible = isSnackbarVisible.value,
+                            isVisible = isSnackbarVisible.value,
                             onDismiss = {
                                 isSnackbarVisible.value = false
                                 errorQueue.removeAt(0)

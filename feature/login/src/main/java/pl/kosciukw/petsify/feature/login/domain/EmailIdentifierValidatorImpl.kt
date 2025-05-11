@@ -13,7 +13,7 @@ class EmailIdentifierValidatorImpl(
     override fun isValid(identifier: EmailIdentifier) = with(identifier) {
         when {
             ! notEmptyValidator.isValid(email) -> IdentifierState.Empty
-            emailValidator.isValid(email) -> IdentifierState.Valid(validIdentifier = identifier)
+            emailValidator.isValid(email) -> IdentifierState.Valid
             else -> IdentifierState.Invalid
         }
     }

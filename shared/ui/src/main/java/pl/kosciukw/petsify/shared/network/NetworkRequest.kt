@@ -11,14 +11,14 @@ fun <T> networkRequest(
     apiCall: () -> T
 ): T =
     if (networkStateProvider.isInternetConnectionAvailable()) apiCall()
-    else throw CoreDomainError.NoInternetConnection("From network request in network state provider")
+    else throw CoreDomainError.NoInternetConnection(message = "From network request in network state provider")
 
 suspend fun <T> suspendNetworkRequest(
     networkStateProvider: NetworkStateProvider,
     apiCall: suspend () -> T
 ): T =
     if (networkStateProvider.isInternetConnectionAvailable()) apiCall()
-    else throw CoreDomainError.NoInternetConnection("From suspend network request in network state provider")
+    else throw CoreDomainError.NoInternetConnection(message = "From suspend network request in network state provider")
 
 suspend fun suspendCallback(
     errorMapper: ApiToDomainErrorMapper? = null,

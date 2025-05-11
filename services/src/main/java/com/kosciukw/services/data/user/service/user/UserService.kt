@@ -5,6 +5,7 @@ import com.kosciukw.services.data.user.model.domain.PairByPasswordDomainModel
 
 interface UserService {
 
-//    suspend fun loginDeviceByPassword(request: PairByPasswordDomainModel): ResultOrFailure<UserDomainModel, Throwable>
-    suspend fun loginDeviceByPassword(request: PairByPasswordDomainModel): AccessTokenApiModel
+    suspend fun pairDeviceByPassword(
+        request: PairByPasswordDomainModel
+    ): AccessTokenApiModel
 }
