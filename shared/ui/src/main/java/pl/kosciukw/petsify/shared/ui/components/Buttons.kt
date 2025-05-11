@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -22,6 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import pl.kosciukw.petsify.shared.ui.components.shapes.RoundedCornerShapeM
 import pl.kosciukw.petsify.shared.ui.theme.GoshawkGrey
 import pl.kosciukw.petsify.shared.ui.theme.TextBoldS
 
@@ -58,7 +58,7 @@ fun ButtonContent(
         containerColor = MaterialTheme.colorScheme.tertiaryContainer
     ),
     onClick: () -> Unit,
-    shape: Shape = RoundedCornerShape(18.dp),
+    shape: Shape = RoundedCornerShapeM,
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
     content: @Composable () -> Unit
 ) {

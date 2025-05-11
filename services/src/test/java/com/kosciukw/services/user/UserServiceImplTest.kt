@@ -6,7 +6,7 @@ import com.kosciukw.services.data.user.service.user.UserService
 import com.kosciukw.services.data.user.service.user.impl.UserServiceImpl
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -24,7 +24,7 @@ internal class UserServiceImplTest {
     }
 
     @Test
-    fun `When pair device called Then should call proper method in repository`() {
+    fun `When pair device called Then should call proper method in repository`() = runTest {
         //Given
         val givenPairByPasswordDomainModel = PairByPasswordDomainModel(
             email = "email",
@@ -32,9 +32,7 @@ internal class UserServiceImplTest {
         )
 
         //When
-        runBlocking {
-            userRepository.pairDeviceByPassword(givenPairByPasswordDomainModel)
-        }
+        userRepository.pairDeviceByPassword(givenPairByPasswordDomainModel)
 
         //Then
         coVerify { userRepository.pairDeviceByPassword(givenPairByPasswordDomainModel) }

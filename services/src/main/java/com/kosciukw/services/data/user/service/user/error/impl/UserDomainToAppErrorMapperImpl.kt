@@ -24,8 +24,8 @@ class UserDomainToAppErrorMapperImpl @Inject constructor(
         )
 
         else -> AppError.InfoError(
-            uiMessage = error.message,
-            technicalMessage = context.getString(SharedR.string.error_something_went_wrong)
+            technicalMessage =  error.message,
+            uiMessage = context.getString(SharedR.string.error_something_went_wrong)
         )
     }
 }

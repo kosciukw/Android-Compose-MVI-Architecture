@@ -14,8 +14,8 @@ import pl.kosciukw.petsify.shared.ui.theme.TextS
 import pl.kosciukw.petsify.shared.ui.theme.TextSecondary
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import pl.kosciukw.petsify.shared.ui.components.shapes.RoundedCornerShapeM
 import pl.kosciukw.petsify.shared.utils.empty
 
 @Composable
@@ -35,15 +35,12 @@ fun EditText(
     errorMessage: String? = null,
     isErrorMessageEnabled: Boolean = false,
 ) {
-    val transformation = if (inputType == KeyboardType.Password) PasswordVisualTransformation()
-    else VisualTransformation.None
-
     TextField(
         modifier = modifier,
         value = text,
         singleLine = true,
         onValueChange = onTextChange,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShapeM,
         label = {
             Text(
                 style = labelTextStyle,
@@ -79,7 +76,7 @@ fun EditText(
                 )
             }
         },
-        visualTransformation = transformation
+        visualTransformation = VisualTransformation.None
     )
 }
 
@@ -104,7 +101,7 @@ fun EditTextOutline(
         value = text,
         singleLine = true,
         onValueChange = onTextChange,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShapeM,
         label = {
             Text(
                 style = labelTextStyle,

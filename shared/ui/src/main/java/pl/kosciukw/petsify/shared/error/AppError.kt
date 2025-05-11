@@ -4,21 +4,17 @@ sealed class AppError(override val message: String) : Throwable(message) {
 
     class InfoError(
         val uiMessage: String,
-        technicalMessage: String
+        val technicalMessage: String
     ) : AppError(message = technicalMessage)
 
     sealed class TechnicalError(
         message: String
-    ) : AppError(message = HEADER + message) {
+    ) : AppError(message = message) {
 
         class Unknown(message: String) : TechnicalError(message = message)
 
         class UserIsLocked(message: String) : TechnicalError(message = message)
 
         class SessionExpired(message: String) : TechnicalError(message = message)
-
-        companion object {
-            private const val HEADER = "TechnicalError : "
-        }
     }
 }

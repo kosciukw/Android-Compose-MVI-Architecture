@@ -55,9 +55,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    testImplementation(libs.junit)
     testImplementation(libs.bundles.junit5)
     testImplementation(libs.mockk)
+    testImplementation(libs.kotlinxCoroutinesTest)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

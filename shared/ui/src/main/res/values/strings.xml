@@ -21,6 +21,6 @@
 
     <!-- Error messages -->
     <string name="error_no_internet_connection">No internet connection</string>
-    <string name="error_something_went_wrong">Oops… Something went wrong…</string>
+    <string name="error_something_went_wrong">Oops… Something went wrong… Please try again</string>
     <string name="error_authentication">Invalid email or password</string>
 </resources>
