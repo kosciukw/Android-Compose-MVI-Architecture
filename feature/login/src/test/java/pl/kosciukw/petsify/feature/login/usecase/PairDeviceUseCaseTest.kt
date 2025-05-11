@@ -29,7 +29,10 @@ internal class PairDeviceUseCaseTest {
             email = "email@test.com",
             password = "wrongpassword"
         )
-        val exception = UserDomainError.AuthenticationError("AuthenticationError")
+        val exception = UserDomainError.AuthenticationError(
+            message = "AuthenticationError"
+        )
+
         coEvery { userService.pairDeviceByPassword(any()) } throws exception
 
         // When
