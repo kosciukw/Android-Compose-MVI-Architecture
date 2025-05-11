@@ -53,7 +53,6 @@ dependencies {
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
 
-  testImplementation(libs.junit)
   testImplementation(libs.bundles.junit5)
   testImplementation(libs.mockk)
   testImplementation(libs.kotlinxCoroutinesTest)

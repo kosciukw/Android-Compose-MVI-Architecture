@@ -5,7 +5,6 @@ import com.kosciukw.services.data.user.api.controller.UserApiController
 import com.kosciukw.services.data.user.api.provider.UserUrlProvider
 import com.kosciukw.services.data.user.error.mapper.UserExceptionMapper
 import com.kosciukw.services.data.user.model.api.request.PairByPasswordRequest
-import com.kosciukw.services.data.user.model.domain.PairByPasswordDomainModel
 
 class UserApiControllerImpl(
     private val userApi: UserApi,
@@ -13,16 +12,11 @@ class UserApiControllerImpl(
     private val userExceptionMapper: UserExceptionMapper
 ) : UserApiController {
 
-    override suspend fun pairByPassword(pairByPasswordDomainModel: PairByPasswordDomainModel) =
+    override suspend fun pairByPassword(request: PairByPasswordRequest) =
         userExceptionMapper.mapException {
-            with(pairByPasswordDomainModel) {
-                userApi.pairByPassword(
-                    pairByPasswordRequest = PairByPasswordRequest(
-                        email = email,
-                        password = password
-                    ),
-                    url = userUrlProvider.getPairByPasswordUrl()
-                )
-            }
+            userApi.pairByPassword(
+                pairByPasswordRequest = request,
+                url = userUrlProvider.getPairByPasswordUrl()
+            )
         }
 }

@@ -1,7 +1,9 @@
 package com.kosciukw.services.user.repository
 
 import com.kosciukw.services.data.user.api.controller.UserApiController
+import com.kosciukw.services.data.user.mapper.PairByPasswordDomainToRequestModelMapper
 import com.kosciukw.services.data.user.mapper.UserApiToDomainErrorMapper
+import com.kosciukw.services.data.user.model.api.request.PairByPasswordRequest
 import com.kosciukw.services.data.user.model.domain.PairByPasswordDomainModel
 import com.kosciukw.services.data.user.repository.UserRepository
 import com.kosciukw.services.data.user.repository.impl.UserRepositoryRemoteImpl
@@ -20,6 +22,8 @@ internal class UserRepositoryRemoteImplTest {
     private lateinit var repository: UserRepository
     private val networkStateProvider: NetworkStateProvider = mockk(relaxed = true)
     private val errorMapper: UserApiToDomainErrorMapper = mockk(relaxed = true)
+    private val pairByPasswordDomainToRequestModelMapper: PairByPasswordDomainToRequestModelMapper =
+        mockk(relaxed = true)
     private val userApiController: UserApiController = mockk(relaxed = true)
 
     @BeforeEach
@@ -27,7 +31,8 @@ internal class UserRepositoryRemoteImplTest {
         repository = UserRepositoryRemoteImpl(
             networkStateProvider = networkStateProvider,
             errorMapper = errorMapper,
-            userApiController = userApiController
+            userApiController = userApiController,
+            pairByPasswordDomainToRequestModelMapper = pairByPasswordDomainToRequestModelMapper
         )
     }
 
@@ -39,7 +44,17 @@ internal class UserRepositoryRemoteImplTest {
             password = "password"
         )
 
-        every { networkStateProvider.isInternetConnectionAvailable() } returns true
+        val givenPairDeviceByPasswordRequest = PairByPasswordRequest(
+            email = "email",
+            password = "password"
+        )
+
+        every {
+            networkStateProvider.isInternetConnectionAvailable()
+        } returns true
+        every {
+            pairByPasswordDomainToRequestModelMapper.map(givenPairByPasswordDomainModel)
+        } returns givenPairDeviceByPasswordRequest
 
         //When
         runBlocking {
@@ -47,7 +62,7 @@ internal class UserRepositoryRemoteImplTest {
         }
 
         //Then
-        coVerify { userApiController.pairByPassword(givenPairByPasswordDomainModel) }
+        coVerify { userApiController.pairByPassword(givenPairDeviceByPasswordRequest) }
     }
 
     @Test

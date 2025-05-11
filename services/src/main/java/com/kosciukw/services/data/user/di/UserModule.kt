@@ -11,6 +11,7 @@ import com.kosciukw.services.data.user.error.mapper.UserExceptionMapper
 import com.kosciukw.services.data.user.error.mapper.impl.ErrorResponseToUserApiExceptionMapperImpl
 import com.kosciukw.services.data.user.error.mapper.impl.HttpToUserApiExceptionMapperImpl
 import com.kosciukw.services.data.user.error.mapper.impl.UserExceptionMapperImpl
+import com.kosciukw.services.data.user.mapper.PairByPasswordDomainToRequestModelMapper
 import com.kosciukw.services.data.user.mapper.UserApiToDomainErrorMapper
 import com.kosciukw.services.data.user.repository.UserRepository
 import com.kosciukw.services.data.user.repository.error.UserApiToDomainErrorMapperImpl
@@ -41,11 +42,13 @@ object UserModule {
     fun provideUserRepository(
         errorMapper: UserApiToDomainErrorMapper,
         networkStateProvider: NetworkStateProvider,
-        userApiController: UserApiController
+        userApiController: UserApiController,
+        pairByPasswordDomainToRequestModelMapper: PairByPasswordDomainToRequestModelMapper
     ): UserRepository = UserRepositoryRemoteImpl(
         errorMapper = errorMapper,
         networkStateProvider = networkStateProvider,
-        userApiController = userApiController
+        userApiController = userApiController,
+        pairByPasswordDomainToRequestModelMapper = pairByPasswordDomainToRequestModelMapper
     )
 
     @Provides
@@ -57,7 +60,7 @@ object UserModule {
     @Named("UserApiRetrofit")
     fun provideUserRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.0.129:8080/") //TODO 10.05.2025 ip is not constant
+            .baseUrl("http://192.168.0.33:8080/") //TODO 10.05.2025 ip is not constant
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
