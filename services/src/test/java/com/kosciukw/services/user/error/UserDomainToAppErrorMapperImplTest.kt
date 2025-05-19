@@ -31,9 +31,7 @@ internal class UserDomainToAppErrorMapperImplTest {
 
         val givenError = UserDomainError.AuthenticationError(message = givenMessage)
 
-        every {
-            context.getString(SharedR.string.error_authentication)
-        } returns expectedUiMessage
+        every { context.getString(SharedR.string.error_authentication) } returns expectedUiMessage
 
         val result = mapper.map(givenError)
 

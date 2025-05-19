@@ -23,10 +23,10 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import pl.kosciukw.petsify.shared.ui.components.shapes.RoundedCornerShapeM
 import pl.kosciukw.petsify.shared.ui.theme.TextRegularS
 import pl.kosciukw.petsify.shared.ui.theme.TextS
 import pl.kosciukw.petsify.shared.ui.theme.TextSecondary
@@ -40,7 +40,10 @@ fun PasswordInput(
     label: String,
     trailingIcon: ImageVector,
     iconDescription: String = String.empty(),
-    labelTextStyle: TextStyle = TextSecondary.copy(fontSize = TextS, textAlign = TextAlign.Start),
+    labelTextStyle: TextStyle = TextSecondary.copy(
+        fontSize = TextS,
+        textAlign = TextAlign.Start
+    ),
     inputType: KeyboardType = KeyboardType.Text,
     inputTextStyle: TextStyle = TextRegularS.copy(textAlign = TextAlign.Start),
     errorMessage: String? = null,
@@ -74,7 +77,7 @@ fun PasswordInput(
         value = text,
         onValueChange = onTextChange,
         singleLine = true,
-        shape = RoundedCornerShapeM,
+        shape = RoundedCornerShape(18.dp),
         label = { Text(style = labelTextStyle, text = label) },
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = inputType),
         textStyle = inputTextStyle,

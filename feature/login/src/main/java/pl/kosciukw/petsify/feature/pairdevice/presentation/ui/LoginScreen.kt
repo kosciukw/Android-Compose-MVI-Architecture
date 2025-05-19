@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -55,7 +56,6 @@ import pl.kosciukw.petsify.shared.ui.components.EditText
 import pl.kosciukw.petsify.shared.ui.components.UIComponent
 import pl.kosciukw.petsify.shared.ui.components.progress.ProgressBarState
 import pl.kosciukw.petsify.shared.ui.components.secure.PasswordInput
-import pl.kosciukw.petsify.shared.ui.components.shapes.RoundedCornerShapeL
 import pl.kosciukw.petsify.shared.ui.theme.BlackLiquorice
 import pl.kosciukw.petsify.shared.ui.theme.GoshawkGrey
 import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
@@ -298,7 +298,7 @@ private fun LoginWithGoogleButton(
             .border(
                 width = borderWidth,
                 color = borderColor,
-                shape = RoundedCornerShapeL
+                shape = RoundedCornerShape(22.dp)
             )
             .height(50.dp)
             .fillMaxWidth(),

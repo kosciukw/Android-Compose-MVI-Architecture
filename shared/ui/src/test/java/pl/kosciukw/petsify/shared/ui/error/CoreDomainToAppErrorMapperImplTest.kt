@@ -27,17 +27,15 @@ internal class CoreDomainToAppErrorMapperImplTest {
     @Test
     fun `When error is no internet connection Then should return info error with correct ui message`() {
         val givenMessage = "No internet connection"
-        val givenUiMessage = "Ui message"
+        val uiMessage = "Ui message"
         val givenError = CoreDomainError.NoInternetConnection(message = givenMessage)
 
-        every {
-            context.getString(SharedR.string.error_no_internet_connection)
-        } returns givenUiMessage
+        every { context.getString(SharedR.string.error_no_internet_connection) } returns uiMessage
 
         val result = mapper.map(givenError)
 
         assertTrue(result is AppError.InfoError)
-        assertEquals(givenUiMessage, (result as AppError.InfoError).uiMessage)
+        assertEquals(uiMessage, (result as AppError.InfoError).uiMessage)
     }
 
     @Test
