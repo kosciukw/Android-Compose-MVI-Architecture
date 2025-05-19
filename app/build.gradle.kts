@@ -3,6 +3,8 @@ plugins {
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.hilt.android.gradle.plugin)
+  kotlin("kapt")
 }
 
 android {
@@ -39,6 +41,12 @@ android {
   buildFeatures {
     compose = true
   }
+  testOptions {
+    unitTests.isIncludeAndroidResources = true
+    unitTests.all {
+      it.useJUnitPlatform()
+    }
+  }
 }
 
 dependencies {
@@ -50,6 +58,12 @@ dependencies {
   implementation(projects.feature.composer)
   implementation(libs.bundles.androidx)
 
+  implementation(libs.kotlinx.metadata.jvm)
+  implementation(libs.hilt.android)
+  implementation(project(":services"))
+  kapt(libs.hilt.compiler)
+  implementation(libs.androidx.hilt.navigation.compose)
+
   debugImplementation(libs.bundles.compose.debug)
 
   androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -57,5 +71,7 @@ dependencies {
   androidTestImplementation(libs.androidx.espresso.core)
   androidTestImplementation(libs.androidx.ui.test.junit4)
 
-  testImplementation(libs.junit)
+  testImplementation(libs.bundles.junit5)
+  testImplementation(libs.mockk)
+  testImplementation(libs.kotlinxCoroutinesTest)
 }

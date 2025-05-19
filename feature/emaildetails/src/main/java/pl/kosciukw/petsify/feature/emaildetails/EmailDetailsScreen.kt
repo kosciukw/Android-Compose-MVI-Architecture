@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
 
+//TODO 10.05.2025: To be deleted
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun EmailDetailsScreen(

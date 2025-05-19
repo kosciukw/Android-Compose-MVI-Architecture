@@ -3,6 +3,8 @@ plugins {
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.hilt.android.gradle.plugin)
+  kotlin("kapt")
 }
 
 android {
@@ -32,13 +34,26 @@ android {
   kotlinOptions {
     jvmTarget = libs.versions.javaVersion.get()
   }
+  testOptions {
+    unitTests.isIncludeAndroidResources = true
+    unitTests.all {
+      it.useJUnitPlatform()
+    }
+  }
 }
 
 dependencies {
   implementation(projects.shared.ui)
+  implementation(projects.services)
+
+  implementation(libs.hilt.android)
+  implementation(libs.androidx.hilt.navigation.compose)
+  kapt(libs.hilt.compiler)
 
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
 
-  testImplementation(libs.junit)
+  testImplementation(libs.bundles.junit5)
+  testImplementation(libs.mockk)
+  testImplementation(libs.kotlinxCoroutinesTest)
 }

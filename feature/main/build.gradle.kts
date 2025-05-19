@@ -38,6 +38,7 @@ dependencies {
   implementation(projects.shared.ui)
   implementation(projects.feature.emails)
   implementation(projects.feature.profile)
+  implementation(projects.services)
 
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)

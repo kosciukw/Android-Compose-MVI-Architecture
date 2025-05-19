@@ -23,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.kosciukw.petsify.shared.ui.theme.PetsifyTheme
+import pl.kosciukw.petsify.shared.utils.empty
 
+//TODO 10.05.2025: To be deleted
 @Composable
 internal fun EmailsListScreen(
   onOpenEmailDetails: (id: Int) -> Unit,
@@ -70,7 +72,7 @@ private fun EmailsSearchBar() {
     windowInsets = WindowInsets(0.dp),
     inputField = {
       SearchBarDefaults.InputField(
-        query = "",
+        query = String.empty(),
         onQueryChange = {},
         onSearch = {},
         leadingIcon = {
