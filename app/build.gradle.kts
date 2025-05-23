@@ -54,8 +54,6 @@ dependencies {
   implementation(projects.feature.login)
   implementation(projects.feature.signup)
   implementation(projects.feature.main)
-  implementation(projects.feature.emaildetails)
-  implementation(projects.feature.composer)
   implementation(libs.bundles.androidx)
 
   implementation(libs.kotlinx.metadata.jvm)

@@ -9,14 +9,9 @@ import kotlinx.serialization.Serializable
 private data object MainDestination
 
 fun NavGraphBuilder.mainScreen(
-  onOpenEmailDetails: (emailId: Int) -> Unit,
-  onComposeNewEmail: () -> Unit
 ) {
   composable<MainDestination> {
-    MainScreen(
-      onOpenEmailDetails = onOpenEmailDetails,
-      onComposeNewEmail = onComposeNewEmail
-    )
+    MainScreen()
   }
 }
 
